@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/Colors.dart';
-import 'package:whatsapp_clone/common/util/utils.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 
 class OTPScreen extends ConsumerWidget {
@@ -41,9 +40,6 @@ class OTPScreen extends ConsumerWidget {
               onChanged: (val){
                 if(val.length == 6){
                   verifyOTP(context, ref, val.trim());
-                }
-                else{
-                  showSnackBar(context: context, content: "please provide a valid OTP");
                 }
               },
             ),

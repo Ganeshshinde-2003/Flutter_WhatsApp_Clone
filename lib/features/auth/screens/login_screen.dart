@@ -58,7 +58,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           children: [
             const Text("Whatsapp will need to verify your phone number."),
             const SizedBox(height: 10,),
-            TextButton(onPressed: pickCountry, child: Text("Pick Country")),
+            TextButton(onPressed: pickCountry, child: const Text("Pick Country")),
             const SizedBox(height: 5,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
