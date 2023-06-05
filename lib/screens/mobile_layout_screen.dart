@@ -1,11 +1,11 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Colors.dart';
 import '../widgets/contacts_list.dart';
 
 class MobileLayoutScreen extends StatelessWidget {
+  static const routeName = '/mobile-layout';
   const MobileLayoutScreen({Key? key}) : super(key: key);
 
   @override

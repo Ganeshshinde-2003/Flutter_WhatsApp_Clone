@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/repository/common_firebase_storage_repository.dart';
 import 'package:whatsapp_clone/common/util/utils.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/user_information_screen.dart';
 import 'dart:io';
+
+import 'package:whatsapp_clone/modules/user_module.dart';
+import 'package:whatsapp_clone/screens/mobile_layout_screen.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance));
 
@@ -59,10 +63,15 @@ class AuthRepository {
         photoUrl = await ref.read(commonFirebaseStorageRepositoryProvider).storeFileToFirebase('profilePic/$uid', profilePic);
       }
 
+      var user =UserModel(name: name, uid: uid, profilePic: photoUrl, isOnline: true, phoneNumber: auth.currentUser!.uid, groupId: []);
 
+      await firestore.collection('users').doc(uid).set(user.toMap());
+
+      Navigator.pushNamedAndRemoveUntil(context, MobileLayoutScreen.routeName, (route) => false,);
 
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
+      print(e.toString());
     }
   }
 

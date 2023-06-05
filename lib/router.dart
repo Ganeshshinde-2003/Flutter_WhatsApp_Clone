@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/features/auth/screens/login_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/user_information_screen.dart';
+import 'package:whatsapp_clone/screens/mobile_layout_screen.dart';
 import 'common/widgets/error.dart';
 
 Route<dynamic> generateRoute( RouteSettings settings) {
@@ -16,6 +17,8 @@ Route<dynamic> generateRoute( RouteSettings settings) {
     case UserInformationScreen.routeName:
       return MaterialPageRoute(builder:(context) => const UserInformationScreen());
 
+    case MobileLayoutScreen.routeName:
+      return MaterialPageRoute(builder:(context) => const MobileLayoutScreen());
     default:
       return MaterialPageRoute(builder: (context) => const Scaffold(
         body: ErrorScreen(error: "This Page Doesn't Exits",),
