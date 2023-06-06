@@ -8,21 +8,26 @@ import 'package:whatsapp_clone/common/util/utils.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/user_information_screen.dart';
 import 'dart:io';
-
 import 'package:whatsapp_clone/modules/user_module.dart';
 import 'package:whatsapp_clone/screens/mobile_layout_screen.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance));
-
 class AuthRepository {
-
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-
   AuthRepository({
     required this.firestore,
     required this.auth,
 });
+
+  Future<UserModel?> getCurrentUserData() async {
+    var userData = await firestore.collection('users').doc(auth.currentUser?.uid).get();
+    UserModel? user;
+    if(userData.data() != null){
+      user = UserModel.fromMap(userData.data()!);
+    }
+    return user;
+  }
 
   void signInWithPhone(BuildContext context, String phoneNumber) async {
     try{
@@ -55,24 +60,16 @@ class AuthRepository {
 })
   async {
     try{
-
       String uid = auth.currentUser!.uid;
       String photoUrl = 'http://pluspng.com/img-png/png-user-icon-circled-user-icon-2240.png';
-
       if(profilePic != null) {
         photoUrl = await ref.read(commonFirebaseStorageRepositoryProvider).storeFileToFirebase('profilePic/$uid', profilePic);
       }
-
-      var user =UserModel(name: name, uid: uid, profilePic: photoUrl, isOnline: true, phoneNumber: auth.currentUser!.uid, groupId: []);
-
+      var user = UserModel(name: name, uid: uid, profilePic: photoUrl, isOnline: true, phoneNumber: auth.currentUser!.phoneNumber!, groupId: []);
       await firestore.collection('users').doc(uid).set(user.toMap());
-
       Navigator.pushNamedAndRemoveUntil(context, MobileLayoutScreen.routeName, (route) => false,);
-
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
-      print(e.toString());
     }
   }
-
 }

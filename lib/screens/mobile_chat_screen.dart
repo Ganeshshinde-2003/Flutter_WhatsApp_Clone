@@ -1,12 +1,10 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../Colors.dart';
 import '../info.dart';
 import '../widgets/chat_list.dart';
 
 class MobileChatScreen extends StatelessWidget {
+  static const String routeName = '/mobile-chat-screen';
   const MobileChatScreen({Key? key}) : super(key: key);
 
   @override
