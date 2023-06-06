@@ -7,16 +7,19 @@ import 'package:whatsapp_clone/screens/mobile_chat_screen.dart';
 
 import '../../../modules/user_module.dart';
 
-final selectContactRepositoryProvider = Provider((ref) => SelectContactRepository(firestore: FirebaseFirestore.instance));
+final selectContactRepositoryProvider = Provider(
+    (ref) => SelectContactRepository(firestore: FirebaseFirestore.instance));
 
 class SelectContactRepository {
   final FirebaseFirestore firestore;
-  SelectContactRepository({required this.firestore,});
+  SelectContactRepository({
+    required this.firestore,
+  });
 
   Future<List<Contact>> getContacts() async {
     List<Contact> contacts = [];
-    try{
-      if( await FlutterContacts.requestPermission()){
+    try {
+      if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
       }
     } catch (e) {
@@ -25,20 +28,23 @@ class SelectContactRepository {
     return contacts;
   }
 
-  void selectContact (Contact selectedContact, BuildContext context) async {
-    try{
+  void selectContact(Contact selectedContact, BuildContext context) async {
+    try {
       var userCollect = await firestore.collection('users').get();
       bool isFound = false;
 
-      for (var document in userCollect.docs){
+      for (var document in userCollect.docs) {
         var userData = UserModel.fromMap(document.data());
-        String selectedPhoneNumber = selectedContact.phones[0].number.replaceAll(" ", "");
-        if(selectedPhoneNumber == userData.phoneNumber ){
+        String selectedPhoneNumber =
+            selectedContact.phones[0].number.replaceAll(" ", "");
+        if (selectedPhoneNumber == userData.phoneNumber) {
           isFound = true;
           Navigator.pushNamed(context, MobileChatScreen.routeName);
         }
-        if(!isFound) {
-          showSnackBar(context: context, content: "This number does not exits on this app.");
+        if (!isFound) {
+          showSnackBar(
+              context: context,
+              content: "This number does not exits on this app.");
         }
       }
     } catch (e) {

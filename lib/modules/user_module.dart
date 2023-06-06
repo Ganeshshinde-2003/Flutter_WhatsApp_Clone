@@ -35,8 +35,9 @@ class UserModel {
       profilePic: map['profilePic'] as String,
       isOnline: map['isOnline'] as bool,
       phoneNumber: map['phoneNumber'] as String,
-      groupId: (map['groupId'] as List<dynamic>).map((dynamic item) => item as String).toList(),
+      groupId: (map['groupId'] as List<dynamic>)
+          .map((dynamic item) => item as String)
+          .toList(),
     );
   }
-
 }

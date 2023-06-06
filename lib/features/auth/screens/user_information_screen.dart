@@ -10,7 +10,8 @@ class UserInformationScreen extends ConsumerStatefulWidget {
   const UserInformationScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<UserInformationScreen> createState() => _UserInformationScreenState();
+  ConsumerState<UserInformationScreen> createState() =>
+      _UserInformationScreenState();
 }
 
 class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
@@ -18,22 +19,23 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
   File? image;
 
   @override
-
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     nameController.dispose();
   }
 
-  void selectImage () async {
+  void selectImage() async {
     image = await pickImageFromGallery(context);
     setState(() {});
   }
 
-  void storeUserData () async {
+  void storeUserData() async {
     String name = nameController.text.trim();
-    if(name.isNotEmpty){
-      ref.read(authControllerProvider).saveUserDataToFirebase(context, name, image);
+    if (name.isNotEmpty) {
+      ref
+          .read(authControllerProvider)
+          .saveUserDataToFirebase(context, name, image);
     }
   }
 
@@ -47,18 +49,22 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
             children: [
               Stack(
                 children: [
-                  image == null ?
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage("http://pluspng.com/img-png/png-user-icon-circled-user-icon-2240.png"),
-                    radius: 64,
-                  ): CircleAvatar(
-                    backgroundImage: FileImage(image!),
-                    radius: 64,
-                  ),
+                  image == null
+                      ? const CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              "http://pluspng.com/img-png/png-user-icon-circled-user-icon-2240.png"),
+                          radius: 64,
+                        )
+                      : CircleAvatar(
+                          backgroundImage: FileImage(image!),
+                          radius: 64,
+                        ),
                   Positioned(
-                    bottom: -10,
+                      bottom: -10,
                       left: 80,
-                      child: IconButton(onPressed: selectImage, icon: const Icon(Icons.add_a_photo)))
+                      child: IconButton(
+                          onPressed: selectImage,
+                          icon: const Icon(Icons.add_a_photo)))
                 ],
               ),
               Center(
@@ -74,7 +80,8 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
                         ),
                       ),
                     ),
-                    IconButton(onPressed: storeUserData, icon: const Icon(Icons.done)),
+                    IconButton(
+                        onPressed: storeUserData, icon: const Icon(Icons.done)),
                   ],
                 ),
               )

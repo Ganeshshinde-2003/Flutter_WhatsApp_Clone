@@ -24,20 +24,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
     phoneController.dispose();
   }
+
   void pickCountry() {
-    showCountryPicker(context: context, onSelect: (Country _country){
-      setState(() {
-        country = _country;
-      });
-    }); 
+    showCountryPicker(
+        context: context,
+        onSelect: (Country _country) {
+          setState(() {
+            country = _country;
+          });
+        });
   }
 
   void sendPhoneNumber() {
     String phoneNumber = phoneController.text.trim();
-    if(country != null && phoneNumber.isNotEmpty){
-      ref.read(authControllerProvider).signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
-    }
-    else{
+    if (country != null && phoneNumber.isNotEmpty) {
+      ref
+          .read(authControllerProvider)
+          .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
+    } else {
       showSnackBar(context: context, content: "Fill out all the fields");
     }
   }
@@ -58,30 +62,39 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text("Whatsapp will need to verify your phone number."),
-              const SizedBox(height: 10,),
-              TextButton(onPressed: pickCountry, child: const Text("Pick Country")),
-              const SizedBox(height: 5,),
+              const SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                  onPressed: pickCountry, child: const Text("Pick Country")),
+              const SizedBox(
+                height: 5,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if(country != null)
-                    Text("+${country!.phoneCode}"),
-                  const SizedBox(width: 10,),
-                  SizedBox(width: size.width*0.7,
-                  child: TextField(
-                    controller: phoneController,
-                    decoration: const InputDecoration(
-                      hintText: "phone number",
+                  if (country != null) Text("+${country!.phoneCode}"),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: size.width * 0.7,
+                    child: TextField(
+                      controller: phoneController,
+                      decoration: const InputDecoration(
+                        hintText: "phone number",
+                      ),
                     ),
-                  )
-                    ,),
+                  ),
                 ],
               ),
-              SizedBox(height: size.height*0.6,), 
+              SizedBox(
+                height: size.height * 0.6,
+              ),
               SizedBox(
                 width: 90,
                 child: CustomButton(
-                  onPressed: sendPhoneNumber, 
+                  onPressed: sendPhoneNumber,
                   text: "NEXT",
                 ),
               )
