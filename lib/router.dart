@@ -3,7 +3,7 @@ import 'package:whatsapp_clone/features/auth/screens/login_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/user_information_screen.dart';
 import 'package:whatsapp_clone/features/select_contacts/screens/select_contact_screen.dart';
-import 'package:whatsapp_clone/screens/mobile_chat_screen.dart';
+import 'package:whatsapp_clone/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whatsapp_clone/screens/mobile_layout_screen.dart';
 import 'common/widgets/error.dart';
 

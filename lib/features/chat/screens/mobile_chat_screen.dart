@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/widgets/Loader.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
-import '../Colors.dart';
-import '../modules/user_module.dart';
-import '../widgets/chat_list.dart';
+import '../../../Colors.dart';
+import '../../../modules/user_module.dart';
+import '../../../widgets/chat_list.dart';
+import '../widgets/bottom_chat_field.dart';
 
 class MobileChatScreen extends ConsumerWidget {
   final String name;
@@ -32,7 +33,7 @@ class MobileChatScreen extends ConsumerWidget {
                   fontWeight: FontWeight.normal,
                 ),),
               ],
-            );;
+            );
           },
         ),
         centerTitle: false,
@@ -52,52 +53,11 @@ class MobileChatScreen extends ConsumerWidget {
         ],
       ),
       body: Column(
-        children: [
-          const Expanded(
+        children: const [
+          Expanded(
             child: ChatList(),
           ),
-          TextField(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: mobileChatBoxColor,
-              prefixIcon: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Icon(
-                  Icons.emoji_emotions,
-                  color: Colors.grey,
-                ),
-              ),
-              suffixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(
-                      Icons.camera_alt,
-                      color: Colors.grey,
-                    ),
-                    Icon(
-                      Icons.attach_file,
-                      color: Colors.grey,
-                    ),
-                    Icon(
-                      Icons.money,
-                      color: Colors.grey,
-                    ),
-                  ],
-                ),
-              ),
-              hintText: 'Type a message!',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-                borderSide: const BorderSide(
-                  width: 0,
-                  style: BorderStyle.none,
-                ),
-              ),
-              contentPadding: const EdgeInsets.all(10),
-            ),
-          ),
+          BottomChatField(),
         ],
       ),
     );
