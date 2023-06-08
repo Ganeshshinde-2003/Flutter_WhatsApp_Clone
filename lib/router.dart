@@ -23,7 +23,10 @@ Route<dynamic> generateRoute( RouteSettings settings) {
       return MaterialPageRoute(builder:(context) => const MobileLayoutScreen());
 
     case MobileChatScreen.routeName:
-      return MaterialPageRoute(builder:(context) => const MobileChatScreen());
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final name = arguments['name'];
+      final uid = arguments['uid'];
+      return MaterialPageRoute(builder:(context) => MobileChatScreen(name: name,uid: uid,));
 
     case SelectContactScreen.routeName:
       return MaterialPageRoute(builder:(context) => const SelectContactScreen());
