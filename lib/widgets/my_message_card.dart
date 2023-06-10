@@ -1,9 +1,4 @@
-
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../Colors.dart';
 
 class MyMessageCard extends StatelessWidget {
@@ -29,7 +24,7 @@ class MyMessageCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  left: 10,
+                  left: 20,
                   right: 30,
                   top: 5,
                   bottom: 20,

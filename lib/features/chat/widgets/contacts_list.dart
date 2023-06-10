@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:whatsapp_clone/modules/chat_contact.dart';
 
-import '../Colors.dart';
-import '../features/chat/controller/chat_controller.dart';
-import '../info.dart';
-import '../features/chat/screens/mobile_chat_screen.dart';
+import '../../../Colors.dart';
+import '../../../common/widgets/Loader.dart';
+import '../controller/chat_controller.dart';
+import '../../../info.dart';
+import '../screens/mobile_chat_screen.dart';
 
 class ContactsList extends ConsumerWidget {
   const ContactsList({Key? key}) : super(key: key);
@@ -17,6 +19,9 @@ class ContactsList extends ConsumerWidget {
       child: StreamBuilder<List<ChatContact>>(
         stream: ref.watch(chatControllerProvider).chatContacts(),
         builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return const Loader();
+          }
           return ListView.builder(
             shrinkWrap: true,
             itemCount: snapshot.data!.length,
@@ -26,11 +31,7 @@ class ContactsList extends ConsumerWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const MobileChatScreen(name: "RRR",uid: "122345",),
-                        ),
-                      );
+                      Navigator.pushNamed(context, MobileChatScreen.routeName, arguments: {"name":chatContactData.name, "uid":chatContactData.contactId});
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
@@ -55,7 +56,7 @@ class ContactsList extends ConsumerWidget {
                           radius: 30,
                         ),
                         trailing: Text(
-                          chatContactData.timeSent,
+                          DateFormat.Hm().format(chatContactData.timeSent),
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 13,

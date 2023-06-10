@@ -21,8 +21,9 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void sendTextMessage() async {
     if(isShowSendButton){
       ref.read(chatControllerProvider).sendTextMessage(context, _messageController.text.trim(), widget.recieverUserId);
-      _messageController.text = "";
-      setState(() {});
+      setState(() {
+        _messageController.text = "";
+      });
     }
   }
 

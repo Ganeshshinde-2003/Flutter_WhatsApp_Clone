@@ -4,7 +4,7 @@ import 'package:whatsapp_clone/common/widgets/Loader.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 import '../../../Colors.dart';
 import '../../../modules/user_module.dart';
-import '../../../widgets/chat_list.dart';
+import '../widgets/chat_list.dart';
 import '../widgets/bottom_chat_field.dart';
 
 class MobileChatScreen extends ConsumerWidget {
@@ -54,8 +54,8 @@ class MobileChatScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: ChatList(),
+          Expanded(
+            child: ChatList(recieverUserId: uid,),
           ),
           BottomChatField(recieverUserId:uid,),
         ],

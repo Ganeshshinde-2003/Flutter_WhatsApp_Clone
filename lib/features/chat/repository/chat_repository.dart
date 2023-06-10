@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:whatsapp_clone/common/util/utils.dart';
-import 'package:whatsapp_clone/info.dart';
 import 'package:whatsapp_clone/modules/chat_contact.dart';
 import 'package:whatsapp_clone/modules/message.dart';
 import 'package:whatsapp_clone/modules/user_module.dart';
@@ -25,10 +24,20 @@ class ChatRepository {
       for (var document in event.docs){
         var chatContact = ChatContact.fromMap(document.data());
         var userData = await firestore.collection('users').doc(chatContact.contactId).get();
-        var user = UserModel.fromMap(userData.data()!);
+        var user = UserModel.fromMap(userData.data() ?? {});
         contacts.add(ChatContact(name: user.name, profilePic: user.profilePic, contactId: chatContact.contactId, lastMessage: chatContact.lastMessage, timeSent: chatContact.timeSent,));
       }
       return contacts;
+    });
+  }
+
+  Stream<List<Message>> getChatStream (String recieverUserId){
+    return firestore.collection('users').doc(auth.currentUser!.uid).collection('chats').doc(recieverUserId).collection('messages').orderBy('timeSent').snapshots().map((event) {
+      List<Message> messages = [];
+      for(var document in event.docs){
+        messages.add(Message.fromMap(document.data()));
+      }
+      return messages;
     });
   }
   
