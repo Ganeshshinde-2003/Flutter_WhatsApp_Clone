@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
@@ -29,4 +30,24 @@ class ChatController {
   void sendTextMessage(BuildContext context, String text, String recieverUserId, ) {
     ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendTextMessage(context: context, text: text, recieverUserId: recieverUserId, senderUser: value!,) );
   }
+
+  void sendFileMessage(BuildContext context, File file, String recieverUserId, MessageEnum messageEnum,){
+    ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendFileMessage(context: context, file: file, recieverUserId: recieverUserId, senderUserData: value!, ref: ref, messageEnum: messageEnum));
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
