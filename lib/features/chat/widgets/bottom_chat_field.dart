@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:whatsapp_clone/common/util/utils.dart';
 import 'package:whatsapp_clone/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp_clone/modules/message.dart';
@@ -23,6 +26,26 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   final TextEditingController _messageController = TextEditingController();
   bool isShowEmojiContainer = false;
   FocusNode focusNode = FocusNode();
+  bool isRecordInit = false;
+  bool isRecording = false;
+  FlutterSoundRecorder? _soundRecorder;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _soundRecorder = FlutterSoundRecorder();
+    openAudio();
+  }
+
+  void openAudio() async {
+    final status = await Permission.microphone.request();
+    if(status != PermissionStatus.granted){
+      throw RecordingPermissionException("Mic permission not allowed!");
+    }
+    await _soundRecorder!.openRecorder();
+    isRecordInit = true;
+  }
 
   void sendTextMessage() async {
     if(isShowSendButton){
@@ -30,7 +53,24 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       setState(() {
         _messageController.text = "";
       });
+    } else {
+      var tempDir = await getTemporaryDirectory();
+      var path = '${tempDir.path}/flutter_sound.aac';
+      if(!isRecordInit) {
+        return;
+      }
+      if(isRecording){
+        await _soundRecorder!.stopRecorder();
+        sendFileMessage(File(path), MessageEnum.audio);
+      }else {
+        await _soundRecorder!.startRecorder(
+          toFile: path,
+        );
+      }
     }
+    setState(() {
+      isRecording = !isRecording;
+    });
   }
 
   void sendFileMessage(File file, MessageEnum messageEnum){
@@ -89,6 +129,8 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     // TODO: implement dispose
     super.dispose();
     _messageController.dispose();
+    _soundRecorder!.closeRecorder();
+    isRecordInit = false;
   }
 
   @override
@@ -187,7 +229,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 child: GestureDetector(
                   onTap: sendTextMessage,
                   child: Icon(
-                    isShowSendButton ? Icons.send : Icons.mic,
+                    isShowSendButton ? Icons.send : isRecording ? Icons.close : Icons.mic,
                     color: Colors.white,),
                 ),
               ),
