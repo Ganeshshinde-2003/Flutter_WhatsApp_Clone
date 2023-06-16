@@ -31,7 +31,7 @@ Future<File?> pickVideoFromGallery(BuildContext context) async {
   File? video;
   try {
     final pickedVideo =
-    await ImagePicker().pickVideo(source: ImageSource.gallery);
+        await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (pickedVideo != Null) {
       video = File(pickedVideo!.path);
     }
@@ -43,27 +43,12 @@ Future<File?> pickVideoFromGallery(BuildContext context) async {
 
 Future<GiphyGif?> pickGIF(BuildContext context) async {
   GiphyGif? gif;
-  try{
+  try {
     //R1iHYhiZPta1rHdK6E11urQRpCibSNSe
-    gif = await Giphy.getGif(context: context, apiKey: 'R1iHYhiZPta1rHdK6E11urQRpCibSNSe');
+    gif = await Giphy.getGif(
+        context: context, apiKey: 'R1iHYhiZPta1rHdK6E11urQRpCibSNSe');
   } catch (e) {
     showSnackBar(context: context, content: e.toString());
   }
   return gif;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

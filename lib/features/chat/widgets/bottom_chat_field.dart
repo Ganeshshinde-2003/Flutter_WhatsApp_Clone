@@ -40,7 +40,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   void openAudio() async {
     final status = await Permission.microphone.request();
-    if(status != PermissionStatus.granted){
+    if (status != PermissionStatus.granted) {
       throw RecordingPermissionException("Mic permission not allowed!");
     }
     await _soundRecorder!.openRecorder();
@@ -48,21 +48,22 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   }
 
   void sendTextMessage() async {
-    if(isShowSendButton){
-      ref.read(chatControllerProvider).sendTextMessage(context, _messageController.text.trim(), widget.recieverUserId);
+    if (isShowSendButton) {
+      ref.read(chatControllerProvider).sendTextMessage(
+          context, _messageController.text.trim(), widget.recieverUserId);
       setState(() {
         _messageController.text = "";
       });
     } else {
       var tempDir = await getTemporaryDirectory();
       var path = '${tempDir.path}/flutter_sound.aac';
-      if(!isRecordInit) {
+      if (!isRecordInit) {
         return;
       }
-      if(isRecording){
+      if (isRecording) {
         await _soundRecorder!.stopRecorder();
         sendFileMessage(File(path), MessageEnum.audio);
-      }else {
+      } else {
         await _soundRecorder!.startRecorder(
           toFile: path,
         );
@@ -73,28 +74,32 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     });
   }
 
-  void sendFileMessage(File file, MessageEnum messageEnum){
-    ref.read(chatControllerProvider).sendFileMessage(context, file, widget.recieverUserId, messageEnum);
+  void sendFileMessage(File file, MessageEnum messageEnum) {
+    ref
+        .read(chatControllerProvider)
+        .sendFileMessage(context, file, widget.recieverUserId, messageEnum);
   }
 
-  void selectImage () async {
+  void selectImage() async {
     File? image = await pickImageFromGallery(context);
-    if(image != null){
+    if (image != null) {
       sendFileMessage(image, MessageEnum.image);
     }
   }
 
-  void selectVideo () async {
+  void selectVideo() async {
     File? video = await pickVideoFromGallery(context);
-    if(video != null){
+    if (video != null) {
       sendFileMessage(video, MessageEnum.video);
     }
   }
 
-  void selectGIF () async {
+  void selectGIF() async {
     final gif = await pickGIF(context);
     if (gif != null) {
-      ref.read(chatControllerProvider).sendGIFMessage(context, gif.url, widget.recieverUserId);
+      ref
+          .read(chatControllerProvider)
+          .sendGIFMessage(context, gif.url, widget.recieverUserId);
     }
   }
 
@@ -114,11 +119,10 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void hideKeyBoard() => focusNode.unfocus();
 
   void toggleEmojiKeyBoardContainer() {
-    if(isShowEmojiContainer){
+    if (isShowEmojiContainer) {
       showKeyBoard();
       hideEmojiContainer();
-    }
-    else{
+    } else {
       hideKeyBoard();
       showEmojiContainer();
     }
@@ -144,13 +148,12 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               child: TextFormField(
                 focusNode: focusNode,
                 controller: _messageController,
-                onChanged: (val){
-                  if(val.isNotEmpty){
+                onChanged: (val) {
+                  if (val.isNotEmpty) {
                     setState(() {
                       isShowSendButton = true;
                     });
-                  }
-                  else{
+                  } else {
                     setState(() {
                       isShowSendButton = false;
                     });
@@ -229,27 +232,36 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 child: GestureDetector(
                   onTap: sendTextMessage,
                   child: Icon(
-                    isShowSendButton ? Icons.send : isRecording ? Icons.close : Icons.mic,
-                    color: Colors.white,),
+                    isShowSendButton
+                        ? Icons.send
+                        : isRecording
+                            ? Icons.close
+                            : Icons.mic,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           ],
         ),
-        isShowEmojiContainer ? SizedBox(height: 310,
-          child: EmojiPicker(
-            onEmojiSelected: ((category, emoji) {
-              setState(() {
-                _messageController.text = _messageController.text + emoji.emoji;
-              });
-              if(!isShowSendButton){
-                setState(() {
-                  isShowSendButton = true;
-                });
-              }
-            }),
-          ),
-        ) : const SizedBox(),
+        isShowEmojiContainer
+            ? SizedBox(
+                height: 310,
+                child: EmojiPicker(
+                  onEmojiSelected: ((category, emoji) {
+                    setState(() {
+                      _messageController.text =
+                          _messageController.text + emoji.emoji;
+                    });
+                    if (!isShowSendButton) {
+                      setState(() {
+                        isShowSendButton = true;
+                      });
+                    }
+                  }),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

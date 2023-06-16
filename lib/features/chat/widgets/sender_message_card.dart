@@ -31,17 +31,19 @@ class SenderMessageCard extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: type == MessageEnum.text ? const EdgeInsets.only(
-                  left: 20,
-                  right: 30,
-                  top: 5,
-                  bottom: 20,
-                ) : const EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  right: 5,
-                  bottom: 25,
-                ),
+                padding: type == MessageEnum.text
+                    ? const EdgeInsets.only(
+                        left: 20,
+                        right: 30,
+                        top: 5,
+                        bottom: 20,
+                      )
+                    : const EdgeInsets.only(
+                        left: 5,
+                        top: 5,
+                        right: 5,
+                        bottom: 25,
+                      ),
                 child: DisplayTextImageGIF(type: type, message: message),
               ),
               Positioned(

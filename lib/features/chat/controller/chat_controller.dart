@@ -14,10 +14,11 @@ final chatControllerProvider = Provider((ref) {
 class ChatController {
   final ChatRepository chatRepository;
   final ProviderRef ref;
-  
+
   ChatController({
-    required this.chatRepository, required this.ref,
-});
+    required this.chatRepository,
+    required this.ref,
+  });
 
   Stream<List<ChatContact>> chatContacts() {
     return chatRepository.getChatContacts();
@@ -27,33 +28,51 @@ class ChatController {
     return chatRepository.getChatStream(recieverUserId);
   }
 
-  void sendTextMessage(BuildContext context, String text, String recieverUserId, ) {
-    ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendTextMessage(context: context, text: text, recieverUserId: recieverUserId, senderUser: value!,) );
+  void sendTextMessage(
+    BuildContext context,
+    String text,
+    String recieverUserId,
+  ) {
+    ref
+        .read(userDataAuthProvider)
+        .whenData((value) => chatRepository.sendTextMessage(
+              context: context,
+              text: text,
+              recieverUserId: recieverUserId,
+              senderUser: value!,
+            ));
   }
 
-  void sendFileMessage(BuildContext context, File file, String recieverUserId, MessageEnum messageEnum,){
-    ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendFileMessage(context: context, file: file, recieverUserId: recieverUserId, senderUserData: value!, ref: ref, messageEnum: messageEnum));
+  void sendFileMessage(
+    BuildContext context,
+    File file,
+    String recieverUserId,
+    MessageEnum messageEnum,
+  ) {
+    ref.read(userDataAuthProvider).whenData((value) =>
+        chatRepository.sendFileMessage(
+            context: context,
+            file: file,
+            recieverUserId: recieverUserId,
+            senderUserData: value!,
+            ref: ref,
+            messageEnum: messageEnum));
   }
-  void sendGIFMessage ( BuildContext context, String gifUrl, String recieverUserId, ) {
+
+  void sendGIFMessage(
+    BuildContext context,
+    String gifUrl,
+    String recieverUserId,
+  ) {
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPartfromGif = gifUrl.substring(gifUrlPartIndex);
     String gifUrlPart = 'https://i.giphy.com/media/$gifUrlPartfromGif/200.gif';
 
-    ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendGIFMessage(context: context, gifUrl: gifUrlPart, recieverUserId: recieverUserId, senderUser: value!));
+    ref.read(userDataAuthProvider).whenData((value) =>
+        chatRepository.sendGIFMessage(
+            context: context,
+            gifUrl: gifUrlPart,
+            recieverUserId: recieverUserId,
+            senderUser: value!));
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

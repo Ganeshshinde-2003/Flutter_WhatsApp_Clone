@@ -11,27 +11,31 @@ class MobileChatScreen extends ConsumerWidget {
   final String name;
   final String uid;
   static const String routeName = '/mobile-chat-screen';
-  const MobileChatScreen({Key? key, required this.name, required this.uid}) : super(key: key);
+  const MobileChatScreen({Key? key, required this.name, required this.uid})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: StreamBuilder <UserModel> (
+        title: StreamBuilder<UserModel>(
           stream: ref.read(authControllerProvider).userDataById(uid),
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.waiting){
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const Loader();
             }
-            return  Column(
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(name),
-                Text(snapshot.data!.isOnline ? "online" : "offline", style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.normal,
-                ),),
+                Text(
+                  snapshot.data!.isOnline ? "online" : "offline",
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ],
             );
           },
@@ -55,9 +59,13 @@ class MobileChatScreen extends ConsumerWidget {
       body: Column(
         children: [
           Expanded(
-            child: ChatList(recieverUserId: uid,),
+            child: ChatList(
+              recieverUserId: uid,
+            ),
           ),
-          BottomChatField(recieverUserId:uid,),
+          BottomChatField(
+            recieverUserId: uid,
+          ),
         ],
       ),
     );

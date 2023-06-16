@@ -17,9 +17,10 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    videoPlayerController = CachedVideoPlayerController.network(widget.videoURL)..initialize().then((value) {
-      videoPlayerController.setVolume(1);
-    });
+    videoPlayerController = CachedVideoPlayerController.network(widget.videoURL)
+      ..initialize().then((value) {
+        videoPlayerController.setVolume(1);
+      });
   }
 
   @override
@@ -31,41 +32,27 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(aspectRatio: 16 / 9,
-    child: Stack(
-      children: [
-        CachedVideoPlayer(videoPlayerController),
-        Align(
-          alignment: Alignment.center,
-            child: IconButton(onPressed: (){
-              if(isPlay){
-                videoPlayerController.pause();
-              }
-              else{
-                videoPlayerController.play();
-              }
-              setState(() {
-                isPlay = !isPlay;
-              });
-            }, icon: Icon( isPlay ? Icons.pause_circle : Icons.play_circle))),
-      ],
-    ),
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Stack(
+        children: [
+          CachedVideoPlayer(videoPlayerController),
+          Align(
+              alignment: Alignment.center,
+              child: IconButton(
+                  onPressed: () {
+                    if (isPlay) {
+                      videoPlayerController.pause();
+                    } else {
+                      videoPlayerController.play();
+                    }
+                    setState(() {
+                      isPlay = !isPlay;
+                    });
+                  },
+                  icon: Icon(isPlay ? Icons.pause_circle : Icons.play_circle))),
+        ],
+      ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

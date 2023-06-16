@@ -39,10 +39,10 @@ class SelectContactRepository {
             selectedContact.phones[0].number.replaceAll(" ", "");
         if (selectedPhoneNumber == userData.phoneNumber) {
           isFound = true;
-          Navigator.pushNamed(context, MobileChatScreen.routeName, arguments:{
-            'name':userData.name,
-            'uid':userData.uid,
-          } );
+          Navigator.pushNamed(context, MobileChatScreen.routeName, arguments: {
+            'name': userData.name,
+            'uid': userData.uid,
+          });
         }
         if (!isFound) {
           showSnackBar(
