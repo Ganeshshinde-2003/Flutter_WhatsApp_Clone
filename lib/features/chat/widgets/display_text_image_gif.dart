@@ -15,6 +15,6 @@ class DisplayTextImageGIF extends StatelessWidget {
       style: const TextStyle(
         fontSize: 16
       ),
-    ) : type == MessageEnum.video? VideoPlayerItem(videoURL: message,) : CachedNetworkImage(imageUrl: message,);
+    ) : type == MessageEnum.video? VideoPlayerItem(videoURL: message,) : type == MessageEnum.gif ? CachedNetworkImage(imageUrl: message) : CachedNetworkImage(imageUrl: message,);
   }
 }

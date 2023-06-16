@@ -7,7 +7,6 @@ import 'package:whatsapp_clone/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp_clone/modules/message.dart';
 import '../../../Colors.dart';
 
-
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
   const BottomChatField({
@@ -49,6 +48,13 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     File? video = await pickVideoFromGallery(context);
     if(video != null){
       sendFileMessage(video, MessageEnum.video);
+    }
+  }
+
+  void selectGIF () async {
+    final gif = await pickGIF(context);
+    if (gif != null) {
+      ref.read(chatControllerProvider).sendGIFMessage(context, gif.url, widget.recieverUserId);
     }
   }
 
@@ -125,7 +131,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                             ),
                           ),
                           IconButton(
-                            onPressed: (){},
+                            onPressed: selectGIF,
                             icon: const Icon(
                               Icons.gif,
                               color: Colors.grey,

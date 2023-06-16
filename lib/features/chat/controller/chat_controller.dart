@@ -34,7 +34,13 @@ class ChatController {
   void sendFileMessage(BuildContext context, File file, String recieverUserId, MessageEnum messageEnum,){
     ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendFileMessage(context: context, file: file, recieverUserId: recieverUserId, senderUserData: value!, ref: ref, messageEnum: messageEnum));
   }
+  void sendGIFMessage ( BuildContext context, String gifUrl, String recieverUserId, ) {
+    int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
+    String gifUrlPartfromGif = gifUrl.substring(gifUrlPartIndex);
+    String gifUrlPart = 'https://i.giphy.com/media/$gifUrlPartfromGif/200.gif';
 
+    ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendGIFMessage(context: context, gifUrl: gifUrlPart, recieverUserId: recieverUserId, senderUser: value!));
+  }
 }
 
 
