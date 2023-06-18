@@ -1,19 +1,21 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/Colors.dart';
 import 'package:whatsapp_clone/common/util/utils.dart';
+import 'package:whatsapp_clone/features/groups/controller/group_controller.dart';
 import 'package:whatsapp_clone/features/groups/widgets/select_contact_groups.dart';
 
-class CreateGroupScreen extends StatefulWidget {
+class CreateGroupScreen extends ConsumerStatefulWidget {
   static const String routeName = '/create-group-screen';
   const CreateGroupScreen({Key? key}) : super(key: key);
 
   @override
-  State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+  ConsumerState<CreateGroupScreen> createState() => _CreateGroupScreenState();
 }
 
-class _CreateGroupScreenState extends State<CreateGroupScreen> {
+class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
   final TextEditingController groupNameController = TextEditingController();
   File? image;
 
@@ -24,7 +26,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
   void createGroup () {
     if(groupNameController.text.trim().isNotEmpty && image != null){
-
+      ref.read(groupControllerProvider).createGroup(context, groupNameController.text.trim(), image!, ref.read(selectedGroupContact));
+      ref.read(selectedGroupContact.state).update((state) => []);
+      Navigator.pop(context);
     }
   }
 
@@ -88,9 +92,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-
-        },
+        onPressed: createGroup,
         backgroundColor: tabColor,
         child: const Icon(Icons.done, color: Colors.white,),
       ),

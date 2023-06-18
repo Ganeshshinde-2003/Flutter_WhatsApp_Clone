@@ -39,7 +39,7 @@ class StatusRepository {
 
       for (int i=0; i<contacts.length; i++){
         var userDataFirebase = await firestore.collection('users').where('phoneNumber', isEqualTo: contacts[i].phones[0].number.replaceAll(" ", "")).get();
-        if (userDataFirebase.docs.isNotEmpty){
+        if (userDataFirebase.docs.isNotEmpty && userDataFirebase.docs[0].exists){
           var userData = UserModel.fromMap(userDataFirebase.docs[0].data());
           uidWhoCanSee.add(userData.uid);
         }
@@ -47,7 +47,7 @@ class StatusRepository {
       List<String> statusImageUrls = [];
       var statusSnapShot = await firestore.collection('status').where('uid', isEqualTo:auth.currentUser!.uid).get();
 
-      if(statusSnapShot.docs.isNotEmpty){
+      if(statusSnapShot.docs.isNotEmpty && statusSnapShot.docs[0].exists){
         Status status = Status.fromMap(statusSnapShot.docs[0].data());
         statusImageUrls = status.photoUrl;
         statusImageUrls.add(imageUrl);
