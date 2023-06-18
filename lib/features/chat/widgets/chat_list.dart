@@ -12,7 +12,8 @@ import 'my_message_card.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String recieverUserId;
-  const ChatList({Key? key, required this.recieverUserId}) : super(key: key);
+  final bool isGroupChat;
+  const ChatList({Key? key, required this.recieverUserId, required this.isGroupChat}) : super(key: key);
 
   @override
   ConsumerState<ChatList> createState() => _ChatListState();
@@ -36,12 +37,9 @@ class _ChatListState extends ConsumerState<ChatList> {
   }
 
   @override
-  Widget build(
-    BuildContext context,
-  ) {
+  Widget build(BuildContext context,) {
     return StreamBuilder<List<Message>>(
-        stream:
-            ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
+        stream: widget.isGroupChat ? ref.read(chatControllerProvider).groupChatStream(widget.recieverUserId) : ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loader();
@@ -62,8 +60,7 @@ class _ChatListState extends ConsumerState<ChatList> {
               if(!messageData.isSeen && messageData.receiverId == FirebaseAuth.instance.currentUser!.uid){
                 ref.read(chatControllerProvider).setMessageSeen(context, widget.recieverUserId, messageData.messageId);
               }
-              if (messageData.senderId ==
-                  FirebaseAuth.instance.currentUser!.uid) {
+              if (messageData.senderId == FirebaseAuth.instance.currentUser!.uid) {
                 return MyMessageCard(
                   message: messageData.text,
                   date: timeSent,

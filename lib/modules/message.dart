@@ -74,7 +74,4 @@ class Message {
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory Message.fromJson(String source) => Message.fromMap(json.decode(source) as Map<String, dynamic>);
 }

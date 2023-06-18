@@ -10,8 +10,9 @@ import '../widgets/bottom_chat_field.dart';
 class MobileChatScreen extends ConsumerWidget {
   final String name;
   final String uid;
+  final bool isGroupChat;
   static const String routeName = '/mobile-chat-screen';
-  const MobileChatScreen({Key? key, required this.name, required this.uid})
+  const MobileChatScreen({Key? key, required this.name, required this.uid, required this.isGroupChat})
       : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class MobileChatScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: StreamBuilder<UserModel>(
+        title: isGroupChat ? Text(name) : StreamBuilder<UserModel>(
           stream: ref.read(authControllerProvider).userDataById(uid),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -61,10 +62,12 @@ class MobileChatScreen extends ConsumerWidget {
           Expanded(
             child: ChatList(
               recieverUserId: uid,
+                isGroupChat :isGroupChat,
             ),
           ),
           BottomChatField(
             recieverUserId: uid,
+            isGroupChat :isGroupChat,
           ),
         ],
       ),

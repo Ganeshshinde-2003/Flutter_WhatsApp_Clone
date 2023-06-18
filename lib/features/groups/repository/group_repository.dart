@@ -30,7 +30,7 @@ class GroupRepository {
         }
         var groupId = const Uuid().v1();
         String profileUrl = await ref.read(commonFirebaseStorageRepositoryProvider).storeFileToFirebase("group/$groupId", profilePic);
-        model.Group group = model.Group(senderId: auth.currentUser!.uid, name: name, groupId: groupId, lastMessage: "", groupPic: profileUrl, membersUid: [auth.currentUser!.uid, ...uids]);
+        model.Group group = model.Group(senderId: auth.currentUser!.uid, name: name, groupId: groupId, lastMessage: "", groupPic: profileUrl, membersUid: [auth.currentUser!.uid, ...uids], timeSent: DateTime.now());
 
         await firestore.collection('groups').doc(groupId).set(group.toMap());
       }
