@@ -82,5 +82,34 @@ To get started with the WhatsApp Clone app, follow these steps:
 
     flutter run
     
+    
+## Dependencies
+
+The following dependencies were used to build this app:
+
+- ⚡️ **cupertino_icons: ^1.0.2** - Provides the Cupertino icons for iOS-style design.
+- 🔥 **firebase_auth: ^4.6.2** - Handles user authentication using Firebase Authentication.
+- 🗄️ **firebase_storage: ^11.2.2** - Enables storing and retrieving files in Firebase Cloud Storage.
+- 🔥 **firebase_core: ^2.13.1** - Provides the core functionality for Firebase services.
+- 🗄️ **cloud_firestore: ^4.8.0** - Allows interaction with the Firebase Cloud Firestore database.
+- 🌍 **country_picker: ^2.0.20** - Provides a picker to select countries and their phone codes.
+- 🚿 **riverpod: ^2.3.6** - A simple yet powerful state management library.
+- 🚿 **flutter_riverpod: ^2.3.6** - Integration of Riverpod with Flutter.
+- 🖼️ **image_picker: ^0.8.7+5** - Allows selecting images and videos from the device's gallery.
+- 📚 **flutter_contacts: ^1.1.6** - Retrieves and displays user contacts.
+- 🆔 **uuid: ^3.0.7** - Generates unique IDs for documents and entities.
+- 🌐 **intl: ^0.18.1** - Provides internationalization and localization support.
+- 🖼️ **cached_network_image: ^3.2.3** - Caches network images to improve performance.
+- 🎥 **cached_video_player: ^2.0.4** - Caches and plays videos from the network.
+- 😃 **emoji_picker_flutter: ^1.6.1** - Provides an emoji picker for selecting emojis in the chat.
+- 🎞️ **enough_giphy_flutter: ^0.4.0** - Integrates Giphy for adding animated GIFs to messages.
+- 🎙️ **flutter_sound: ^9.2.13** - Records and plays audio messages.
+- 🔑 **permission_handler: ^9.2.0** - Handles runtime permissions for accessing device features.
+- 📂 **path_provider: ^2.0.15** - Retrieves paths to device directories for file storage.
+- 🔊 **audioplayers: ^4.1.0** - Plays audio files with advanced options.
+- ↔️ **swipe_to: ^1.0.2** - Implements swipe-to-delete and swipe-to-archive gestures.
+- 🔦 **story_view: ^0.14.0** - Displays stories with interactive gestures.
+
+
 ## Contributing 🤝
 Contributions to the WhatsApp Clone project are welcome and encouraged! If you find any bugs, have feature requests, or want to contribute in any way, please open an issue or submit a pull request.
