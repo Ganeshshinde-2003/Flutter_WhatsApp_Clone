@@ -37,7 +37,8 @@ Here are some screenshots of the WhatsApp Clone app:
 
 <img src="https://github.com/Ganeshshinde-2003/Flutter_WhatsApp_Clone/assets/115361691/64f23b46-6db9-4bed-a0d8-fa7db34b4e90" alt="IMG-20230618-WA0012" height="400">
 
-<img src="https://github.com/Ganeshshinde-2003/Flutter_WhatsApp_Clone/assets/115361691/e489d695-caa1-4f57-88d9-d1920d07d6bb" alt="IMG-20230618-WA0013" height="400">
+<img src="https://github.com/Ganeshshinde-2003/Flutter_WhatsApp_Clone/assets/115361691/975a9085-d187-4e98-94c4-96c2872f4763" alt="IMG-20230618-WA0012" height="400">
+
   
 </div>
 
