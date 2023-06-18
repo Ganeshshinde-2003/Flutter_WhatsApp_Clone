@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/features/groups/screens/create_group_acreen.dart';
 import 'package:whatsapp_clone/features/select_contacts/screens/select_contact_screen.dart';
 import 'package:whatsapp_clone/features/status/screens/confirm_status_screen.dart';
 import 'package:whatsapp_clone/features/status/screens/status_contact_screen.dart';
@@ -72,9 +73,14 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
               icon: const Icon(Icons.search, color: Colors.grey),
               onPressed: () {},
             ),
-            IconButton(
-              icon: const Icon(Icons.more_vert, color: Colors.grey),
-              onPressed: () {},
+            PopupMenuButton(
+              icon: const Icon(Icons.more_vert, color: Colors.grey,),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: const Text("Create Group"),
+                  onTap: () => Future(() => Navigator.pushNamed(context, CreateGroupScreen.routeName)),
+                )
+              ],
             ),
           ],
           bottom: TabBar(
@@ -86,7 +92,7 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
             labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-            tabs: [
+            tabs: const [
               Tab(
                 text: 'CHATS',
               ),
@@ -101,10 +107,10 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
         ),
         body: TabBarView(
           controller: tabController,
-            children: [
-              const ContactsList(),
+            children: const [
+              ContactsList(),
               StatusContactScreen(),
-              const Text("Calls")
+              Text("Calls")
             ],
         ),
         floatingActionButton: FloatingActionButton(

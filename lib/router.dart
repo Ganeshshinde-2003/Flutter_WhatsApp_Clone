@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/features/auth/screens/login_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/user_information_screen.dart';
+import 'package:whatsapp_clone/features/groups/screens/create_group_acreen.dart';
 import 'package:whatsapp_clone/features/select_contacts/screens/select_contact_screen.dart';
 import 'package:whatsapp_clone/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whatsapp_clone/features/status/screens/confirm_status_screen.dart';
+import 'package:whatsapp_clone/features/status/screens/status_screen.dart';
+import 'package:whatsapp_clone/modules/status_model.dart';
 import 'package:whatsapp_clone/screens/mobile_layout_screen.dart';
 import 'common/widgets/error.dart';
 
@@ -37,6 +40,12 @@ Route<dynamic> generateRoute( RouteSettings settings) {
     case SelectContactScreen.routeName:
       return MaterialPageRoute(builder:(context) => const SelectContactScreen());
 
+    case StatusScreen.routeName:
+      final status = settings.arguments as Status;
+      return MaterialPageRoute(builder:(context) => StatusScreen(status: status));
+
+    case CreateGroupScreen.routeName:
+      return MaterialPageRoute(builder:(context) => const CreateGroupScreen());
     default:
       return MaterialPageRoute(builder: (context) => const Scaffold(
         body: ErrorScreen(error: "This Page Doesn't Exits",),
